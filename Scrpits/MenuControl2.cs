@@ -11,7 +11,6 @@ public class MenuControl2 : MonoBehaviour
         if (Input.GetKey(KeyCode.Escape))
         {
             Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
             Cursor.visible = (true);
         }
     }

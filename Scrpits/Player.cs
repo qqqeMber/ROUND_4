@@ -8,7 +8,8 @@ public class Player : MonoBehaviour
 {
     private new Rigidbody rigidbody;
     //特效
-    public GameObject LiZi;
+    private GameObject LiZi;
+    private Animator animator;
     //判定
     private float distance;
     private float stateTime;
@@ -27,6 +28,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        animator = GetComponent<Animator>();
         rigidbody = GetComponent<Rigidbody>();
         LiZi = GameObject.Find("LiZi");
         LiZi.SetActive(false);
@@ -45,12 +47,14 @@ public class Player : MonoBehaviour
         {
             stateTime = Time.time;
             LiZi.SetActive(true);
+            animator.SetBool("InPressure", true);
         }
         if (Input.GetKeyUp(KeyCode.Space))
         {
             var elapse = Time.time - stateTime;
             OnJump(elapse);
             LiZi.SetActive(false);
+            animator.SetBool("InPressure", false);
         }
     }
     void OnJump(float elapse)//跳跃
@@ -59,6 +63,7 @@ public class Player : MonoBehaviour
     }
     void BoxBuild()//随机生成随机大小和颜色的跳台
     {
+        
         var box = Instantiate(Box);
         box.transform.position = CurrentBox.transform.position + Direction * Random.Range(1.1f,MaxDistance);
         var randomScale = Random.Range(0.5f, 1);
@@ -71,13 +76,15 @@ public class Player : MonoBehaviour
     {
         if (collision.gameObject.name.Contains("Box") && collision.collider != LastBox)
         {
+            GameObject toDestory = CurrentBox;
             LastBox = collision.collider;
             CurrentBox = collision.gameObject;
             RandomDirection();
+            Box = CurrentBox;
             BoxBuild();
-
+            Destroy(toDestory);
             distance = Vector3.Distance(transform.position, CurrentBox.transform.position);
-            if (distance<=0.08)
+            if (distance<=0.21)
             {
                 score+=4;
             }

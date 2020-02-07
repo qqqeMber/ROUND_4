@@ -16,6 +16,7 @@ public class Enemy : MonoBehaviour
 
     void Start()
     {
+        //获取Transform组件
         transform = GetComponent<Transform>();
         // 获取动画组件
         animator = GetComponentInChildren<Animator>();
@@ -73,7 +74,7 @@ public class Enemy : MonoBehaviour
         {
             agent.isStopped = true;
             // 判断死亡动画是否播放完成
-            if (info.normalizedTime >= 1.5f)
+            if (info.normalizedTime >= 2.0f)
             {
                 // 销毁自身
                 EnemyBuild();
@@ -114,11 +115,13 @@ public class Enemy : MonoBehaviour
     public void OnDamage(int damage)
     {
         life -= damage;
+        animator.SetTrigger("hited");
         // 如果生命为0，进入死亡状态
         if (life == 0)
         {
             agent.isStopped = true;
             animator.SetBool("Dead", true);
         }
+        
     }
 }

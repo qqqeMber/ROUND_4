@@ -28,6 +28,7 @@ public class Player2 : MonoBehaviour
     //组件
     private new Transform transform;
     private CharacterController controller;
+    private Animator animator;
     //视角控制
     private Transform cameraTransform; // 摄像机的Transform组件
     private Vector3 cameraRotation; // 摄像机旋转角度
@@ -38,13 +39,16 @@ public class Player2 : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // 获取AudioSource组件
-        gunAudio = GetComponent<AudioSource>();
+        //获取Animator组件
+        animator = GetComponentInChildren<Animator>();
+        
         // 获取LineRenderer组件
         laserLine = GetComponent<LineRenderer>();
         //获取人物组件
         transform = GetComponent<Transform>();
         controller = GetComponent<CharacterController>();
+        // 获取AudioSource组件枪声
+        gunAudio = GetComponent<AudioSource>();
         // 获取摄像机
         cameraTransform = Camera.main.GetComponent<Transform>();
         // 设置摄像机初始位置
@@ -123,7 +127,9 @@ public class Player2 : MonoBehaviour
         if (life <= 0)
         {
             Cursor.lockState = CursorLockMode.None;
+            SceneManager.LoadScene("iceworld");
         }
+        animator.SetTrigger("hited");
     }
     private void Shoot()
     {

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CameraMove : MonoBehaviour
 {
-    private Vector3 offset = new Vector3(0, 4, 2);//相机相对于玩家的位置
+    private Vector3 offset = new Vector3(-1, 2, 1);//相机相对于玩家的位置
 
     private Transform target;
 

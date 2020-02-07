@@ -14,6 +14,7 @@ public class Anima : MonoBehaviour
     {
         // 获取AudioSource组件
         stepAudio = GetComponent<AudioSource>();
+
         animator = GetComponent<Animator>();
         player = GameObject.Find("Player2").GetComponent<Player2>();
     }
@@ -29,14 +30,11 @@ public class Anima : MonoBehaviour
         float h = Input.GetAxisRaw("Horizontal");
         animator.SetInteger("Horizontal", (int)h);
 
-        if (info.fullPathHash == Animator.StringToHash("Base Layer.forward")
-            || info.fullPathHash == Animator.StringToHash("Base Layer.backward")
-            || info.fullPathHash == Animator.StringToHash("Base Layer.right")
-            || info.fullPathHash == Animator.StringToHash("Base Layer.left"))
+        if (h == 0 && v == 0)
         {
             stepAudio.Play();
         }
-
+        
         //死亡动画
         if (player.life <= 0)
         {
